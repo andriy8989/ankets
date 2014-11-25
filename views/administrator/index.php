@@ -14,9 +14,32 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="uankets-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+    $operIds = array();
+    foreach($operators as $anket){
 
-    
+        foreach ($anket['anketOperators'] as $key=> $operatorV){
+           if(isset($operatorV->operator_id))
+            var_dump($operatorV->operator_id);
+
+       }
+    }
+/*
+    $operatorsArr = array();
+
+
+    for($i = 1; $i <= 2; $i++){
+        $value = $operator[]
+        $item = array("label" => "Стовпчик №",
+            "format" => "html",
+            "value" => "name") ;
+        array_push($operatorsArr, $item);
+    }
+
+    var_dump($operatorsArr);
+    die();*/
+    ?>
+
     <?= GridView::widget([
         'tableOptions'=>['class'=>'table table-striped table-bordered administrator-table'],
         
@@ -52,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Стовпчик №2',
                 'format' => 'html',
                 'value' => function ($model) {
+
                     foreach ($model->anketColums as $k => $colum )
                     {
                         if($colum->colum_id == 2){
@@ -210,6 +234,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
+            [
+                'label' => 'ОП№1',
+                'format' => 'html',
+                'value' => function ($model) {
+                    //var_dump($model->anketOperators);
+                    foreach ($model->anketOperators as $k => $operator )
+                    {
+                        if($operator->operator_id == 1){
+                            $digitalValue = '<div class="oper_1">'.$operator->digital_value.'</div>';
+                        }
+                    }
+                    if(isset($digitalValue))
+                    {
+                        return $digitalValue;
+                    }else{
+                        return '<div class="oper_1"></div>';
+                    }
+                },
+            ],
         ],
     ]); ?>
     
@@ -225,6 +268,4 @@ $this->params['breadcrumbs'][] = $this->title;
     echo "<div id='modalContent'></div>";
  
     Modal::end();
-    ?>
     
-</div>

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\AnketOperator;
 use Yii;
 use app\models\UAnkets;
 use app\models\UAnketsSearch;
@@ -37,15 +38,19 @@ class AdministratorController extends Controller
         //$dataProvider = $searchModel->search(Yii::$app->request->queryParams)->with('anket_type');
         
         $paket_id = 2;
-        //$dataProvider = UAnkets::find()->with('anketType')->with('anketColums')
-          //      ->where(['paket_id' => $paket_id])->all();
+        $operators = UAnkets::find()->with('anketType')->with('anketColums')->with('anketOperators')
+               ->where(['paket_id' => $paket_id])->all();
         
         $dataProvider = new ActiveDataProvider([
-            'query' => UAnkets::find()->with('anketType')->with('anketColums')
+            'query' => UAnkets::find()->with('anketType')->with('anketColums')->with('anketOperators')
                 ->where(['paket_id' => $paket_id])
         ]);
-        
+
+
+        //$operatorCols = new AnketOperator::find()->with();
+
         return $this->render('index', [
+            'operators' => $operators,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

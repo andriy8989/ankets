@@ -14,6 +14,7 @@ use app\modules\admin\models\AnketType;
  * @property integer $paket_id
  *
  * @property AnketColum[] $anketColums
+ * @property AnketOperator[] $anketOperators
  * @property AnketType $anketType
  * @property UAnketsData[] $uAnketsDatas
  */
@@ -48,8 +49,8 @@ class UAnkets extends \yii\db\ActiveRecord
             'id' => 'ID',
             'anket_type_id' => 'Anket Type ID',
             'name' => 'Name',
-            'status' => 'Виконано',
-            'paket_id' => 'Пакет',
+            'status' => 'Status',
+            'paket_id' => 'Paket ID',
         ];
     }
 
@@ -59,6 +60,14 @@ class UAnkets extends \yii\db\ActiveRecord
     public function getAnketColums()
     {
         return $this->hasMany(AnketColum::className(), ['anket_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAnketOperators()
+    {
+        return $this->hasMany(AnketOperator::className(), ['anket_id' => 'id']);
     }
 
     /**

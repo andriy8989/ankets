@@ -14,6 +14,9 @@ use Yii;
  * @property integer $coefficient_for_rob5
  * @property integer $is_auto_run4
  * @property integer $fact_oborot
+ *
+ * @property UAnkets $anket
+ * @property Operators $operator
  */
 class AnketOperator extends \yii\db\ActiveRecord
 {
@@ -50,5 +53,21 @@ class AnketOperator extends \yii\db\ActiveRecord
             'is_auto_run4' => 'Is Auto Run4',
             'fact_oborot' => 'Fact Oborot',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAnket()
+    {
+        return $this->hasOne(UAnkets::className(), ['id' => 'anket_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOperator()
+    {
+        return $this->hasOne(Operators::className(), ['id' => 'operator_id']);
     }
 }
